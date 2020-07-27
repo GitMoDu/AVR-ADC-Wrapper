@@ -1,8 +1,7 @@
 // AvrAdc.h
 // Static wrapper for AVR ADC functionality.
 // Made possible by Nick Gammon (www.gammon.com.au/adc).
-// TODO: Finish implementation for ATTiny85.
-// TODO: Validate channel count.
+
 
 #if !defined(_AVRADC_h) && defined(ARDUINO_ARCH_AVR)
 #define _AVRADC_h
@@ -26,6 +25,7 @@ const uint16_t AdcChannelCount = 5; //TODO: Check if more available?
 const uint32_t AdcSettlePeriodDefault = 15;
 const uint32_t AdcSamplingPeriodDefault = 1;
 
+// Sensible defaults for usable sampling.
 #if F_CPU > 8000000
 const PrescalerEnum PrescalerDefault = PrescalerEnum::P16;
 #elif F_CPU > 1000000
