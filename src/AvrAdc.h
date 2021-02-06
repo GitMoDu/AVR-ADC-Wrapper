@@ -22,8 +22,8 @@ enum PrescalerEnum
 
 const uint16_t AdcRange = 1024;
 const uint16_t AdcChannelCount = 5; //TODO: Check if more available?
-const uint32_t AdcSettlePeriodDefault = 15;
 const uint32_t AdcSamplingPeriodDefault = 1;
+const uint32_t AdcSettlePeriodDefault = 1;
 
 // Sensible defaults for usable sampling.
 #if F_CPU > 8000000
