@@ -57,13 +57,66 @@ public:
 	{
 		ADMUX = bit(REFS0); // Internal 2560 mV reference.
 	}
+
+	////// TODO: Validate all method bellow and move upwards if they're the same in ATTiny and 328.
+	static void StartSample()
+	{
+		ADCSRA |= bit(ADSC);
+	}
+
+	static bool IsSampleDone()
+	{
+		return bit_is_clear(ADCSRA, ADSC); // ADC clears bit when sample is done.
+	}
+
+	static void AdcOn()
+	{
+		ADCSRA |= bit(ADEN) | bit(ADIF);
+	}
+
+	static void AdcOff()
+	{
+		ADCSRA &= ~bit(ADEN);
+	}
+
+	static void SetPrescaler(const PrescalerEnum prescalar)
+	{
+		ADCSRA &= ~(bit(ADPS0) | bit(ADPS1) | bit(ADPS2)); // Clear prescalar.
+
+		switch (prescalar)
+		{
+		case PrescalerEnum::P2:
+			ADCSRA |= bit(ADPS0);
+			break;
+		case PrescalerEnum::P4:
+			ADCSRA |= bit(ADPS1);
+			break;
+		case PrescalerEnum::P8:
+			ADCSRA |= bit(ADPS0) | bit(ADPS1);
+			break;
+		case PrescalerEnum::P16:
+			ADCSRA |= bit(ADPS2);
+			break;
+		case PrescalerEnum::P32:
+			ADCSRA |= bit(ADPS0) | bit(ADPS2);
+			break;
+		case PrescalerEnum::P64:
+			ADCSRA |= bit(ADPS1) | bit(ADPS2);
+			break;
+		case PrescalerEnum::P128:
+			ADCSRA |= bit(ADPS0) | bit(ADPS1) | bit(ADPS2);
+			break;
+		default:
+			break;
+		}
+	}
 };
 
 enum PositiveNegativePairEnum : uint8_t
 {
 	ADC2ADC0 = 100,
 	ADC2ADC1 = 110,
-	ADC2ADC3 = 1000,
+	ADC2ADC3 = 101,
 	ADC0ADC1,
 	ADC0ADC2,
 	ADC0ADC3,
@@ -206,6 +259,7 @@ public:
 		}
 	}
 };
+#endif
 
 class HalfScaleAvrAdc : public BaseAvrAdc
 {
@@ -246,5 +300,4 @@ public:
 		ADMUX |= channel;
 	}
 };
-#endif
 #endif
