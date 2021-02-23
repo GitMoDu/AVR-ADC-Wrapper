@@ -124,8 +124,8 @@ enum PositiveNegativePairEnum : uint8_t
 
 enum DifferentialGainEnum
 {
-	X1,
-	X20
+	X1 = 1,
+	X20 = 20
 };
 
 class DifferentialAvrAdc : public BaseAvrAdc
