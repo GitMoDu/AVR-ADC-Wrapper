@@ -64,7 +64,7 @@ public:
 		ADCSRA |= bit(ADSC);
 	}
 
-	static bool IsSampleDone()
+	static const bool IsSampleDone()
 	{
 		return bit_is_clear(ADCSRA, ADSC); // ADC clears bit when sample is done.
 	}
@@ -131,7 +131,7 @@ enum DifferentialGainEnum
 class DifferentialAvrAdc : public BaseAvrAdc
 {
 public:
-	static void SetChannels(PositiveNegativePairEnum pair)
+	static void SetChannels(const PositiveNegativePairEnum pair)
 	{
 		switch (pair)
 		{
@@ -159,7 +159,7 @@ public:
 		ADMUX |= channel << 2;
 	}
 
-	static void SetDifferentialGain(DifferentialGainEnum gain)
+	static void SetDifferentialGain(const DifferentialGainEnum gain)
 	{
 		switch (gain)
 		{
@@ -204,7 +204,7 @@ public:
 		ADMUX |= bit(REFS0);
 	}
 
-	static bool IsSampleDone()
+	static const bool IsSampleDone()
 	{
 		return bit_is_clear(ADCSRA, ADSC); // ADC clears bit when sample is done.
 	}
@@ -272,7 +272,7 @@ public:
 		ADMUX |= bit(ADLAR);
 	}
 
-	static uint8_t GetSample()
+	static const uint8_t GetSample()
 	{
 		return ADCL;
 	}
@@ -289,7 +289,7 @@ public:
 		ADMUX &= ~bit(ADLAR);
 	}
 
-	static uint16_t GetSample()
+	static const uint16_t GetSample()
 	{
 		return ADC;
 	}
